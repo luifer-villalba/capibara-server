@@ -31,7 +31,8 @@ class User(db.Model):
     def __repr__(self):
         return "<User '{}'>".format(self.username)
 
-    def encode_auth_token(self, user_id):
+    @staticmethod
+    def encode_auth_token(user_id):
         """
         Generates the Auth Token
         :return: string
