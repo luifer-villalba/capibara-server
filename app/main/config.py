@@ -1,6 +1,7 @@
 import os
 
-postgres_local_base = 'postgresql://postgres:postgres@localhost:5433/capibara_db'
+# postgresql://postgres:postgres@localhost:5433/capibara_db
+database_url = os.environ['DATABASE_URL']
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -11,7 +12,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = postgres_local_base
+    SQLALCHEMY_DATABASE_URI = database_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
@@ -25,7 +26,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = postgres_local_base
+    SQLALCHEMY_DATABASE_URI = database_url
 
 
 config_by_name = dict(
