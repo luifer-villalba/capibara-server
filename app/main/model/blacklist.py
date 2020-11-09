@@ -1,5 +1,6 @@
+import pytz
 from .. import db
-import datetime
+from datetime import datetime
 
 
 class BlacklistToken(db.Model):
@@ -7,6 +8,7 @@ class BlacklistToken(db.Model):
     Token Model for storing JWT tokens
     """
     __tablename__ = 'blacklist_tokens'
+    pytz.timezone('America/Asuncion').localize(datetime.now())
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     token = db.Column(db.String(500), unique=True, nullable=False)
@@ -14,7 +16,7 @@ class BlacklistToken(db.Model):
 
     def __init__(self, token):
         self.token = token
-        self.blacklisted_on = datetime.datetime.now()
+        self.blacklisted_on = datetime.now()
 
     def __repr__(self):
         return '<id: token: {}'.format(self.token)

@@ -1,4 +1,5 @@
-import datetime
+import pytz
+from datetime import datetime, timedelta
 import jwt
 from .. import db, flask_bcrypt
 from app.main.model.blacklist import BlacklistToken
@@ -8,6 +9,7 @@ from ..config import key
 class User(db.Model):
     """ User Model for storing user related details """
     __tablename__ = "user"
+    pytz.timezone('America/Asuncion').localize(datetime.now())
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
@@ -16,6 +18,7 @@ class User(db.Model):
     public_id = db.Column(db.String(100), unique=True)
     username = db.Column(db.String(50), unique=True)
     password_hash = db.Column(db.String(100))
+    checkin_list = db.relationship("UserCheckin")
 
     @property
     def password(self):
@@ -39,8 +42,8 @@ class User(db.Model):
         """
         try:
             payload = {
-                'exp': datetime.datetime.now() + datetime.timedelta(days=1, seconds=5),
-                'iat': datetime.datetime.now(),
+                'exp': datetime.now() + timedelta(days=1, seconds=5),
+                'iat': datetime.now(),
                 'sub': user_id
             }
             return jwt.encode(

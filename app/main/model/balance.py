@@ -1,4 +1,5 @@
-import datetime
+import pytz
+from datetime import datetime
 from app.main import db
 
 
@@ -18,4 +19,6 @@ class Balance(db.Model):
     comments = db.Column(db.String(), nullable=True)
     discount_day = db.Column(db.Boolean, default=False)
     date = db.Column(db.DateTime, nullable=False)
-    updated_on = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
+
+    pytz.timezone('America/Asuncion').localize(datetime.now())
+    updated_on = db.Column(db.DateTime, nullable=False, default=datetime.now())

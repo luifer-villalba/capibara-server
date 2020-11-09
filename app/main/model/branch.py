@@ -10,3 +10,4 @@ class Branch(db.Model):
     description = db.Column(db.String(255), unique=False, nullable=False)
     address = db.Column(db.String(255), unique=False, nullable=False)
     balance_list = db.relationship("Balance")
+    checkin_list = db.relationship("UserCheckin")

@@ -11,6 +11,14 @@ class UserDto:
     })
 
 
+class UserCheckinDto:
+    api = Namespace('user_checkin', description='User related operations')
+    user = api.model('user', {
+        'staff_id': fields.String(description='User Identifier'),
+        'created_at': fields.DateTime(description='Mark date')
+    })
+
+
 class AuthDto:
     api = Namespace('auth', description='Authentication related operations')
     user_auth = api.model('auth_details', {

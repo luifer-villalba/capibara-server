@@ -10,6 +10,7 @@ class Auth:
             user = User.query.filter_by(username=data.get('username')).first()
             if user and user.check_password(data.get('password')):
                 auth_token = user.encode_auth_token(user.id)
+                print('Authorization ' + auth_token.decode())
                 if auth_token:
                     response_object = {
                         'status': 'success',
@@ -59,7 +60,7 @@ class Auth:
     @staticmethod
     def get_logged_in_user(new_request):
         # get the auth token
-        auth_token = new_request.headers.get('Authorization')
+        auth_token = new_request.headers.get('authorization')
         if auth_token:
             resp = User.decode_auth_token(auth_token)
             if not isinstance(resp, str):
